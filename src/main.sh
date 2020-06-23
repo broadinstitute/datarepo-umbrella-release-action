@@ -17,7 +17,18 @@ parseInputs () {
   fi
 }
 
-function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+version () { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+
+bumpumbrella () {
+  umbrella_version=$(yq r charts/${umbrella_name}/Chart.yaml 'version')
+  a=(`echo $umbrella_version | sed 's/\./ /g'`)
+  ((a[3]++))
+  new_umbrella_version="${a[1]}.${a[2]}.${a[3]}"
+
+  yq w -i charts/${umbrella_name}/Chart.yaml 'version' "${new_umbrella_version}"
+  yq w -i charts/${umbrella_name}/Chart.yaml 'appVersion' "${new_umbrella_version}"
+
+}
 
 helmchartrelease () {
 for i in $(echo $helm_charts | sed "s/,/ /g")
@@ -57,6 +68,7 @@ helmpackage () {
 main () {
   parseInputs
   helmchartrelease
+  bumpumbrella
   helmpackage
 }
 
