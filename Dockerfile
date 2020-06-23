@@ -18,7 +18,4 @@ RUN wget -O /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download
 COPY ["src", "/src/"]
 RUN chmod -R +x /src
 
-# clean cache apks
-RUN apt-get clean -qqy
-
 ENTRYPOINT ["/src/main.sh"]
