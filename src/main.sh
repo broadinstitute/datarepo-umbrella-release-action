@@ -62,6 +62,7 @@ done
 
 helmpackage () {
   helm repo add datarepo-helm https://broadinstitute.github.io/datarepo-helm
+  sleep 30
   helm repo update
   helm package charts/${umbrella_name} --destination .deploy -u
 }
