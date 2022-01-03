@@ -10,7 +10,7 @@ inputs:
     default: "datarepo"
   helm_charts:
     description: "list of helm charts you release in umbrella"
-    default: "create-secret-manager-secret,gcloud-sqlproxy,datarepo-api,datarepo-ui,oidc-proxy"
+    default: "create-secret-manager-secret,gcloud-sqlproxy,datarepo-api,datarepo-ui,oidc-proxy,de-elasticsearch"
 runs:
   using: "docker"
   image: "./Dockerfile"
